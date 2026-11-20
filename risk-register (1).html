@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Risk Register ISO 31000</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1c2430;--mu:#5d6b7c;--bd:#dde2e8;--pr:#1f5fbf;--pr-t:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12161c;--card:#1b222b;--tx:#e8edf3;--mu:#98a5b5;--bd:#2d3744;--pr:#5b9bff;--pr-t:#0b1220}}
+:root[data-theme="dark"]{--bg:#12161c;--card:#1b222b;--tx:#e8edf3;--mu:#98a5b5;--bd:#2d3744;--pr:#5b9bff;--pr-t:#0b1220}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:16px 20px 0;max-width:1200px;margin:auto}
+h1{font-size:20px;margin:0}header p{margin:2px 0 12px;color:var(--mu);font-size:13px}
+nav{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--bd)}
+nav button{background:none;border:0;border-bottom:3px solid transparent;padding:10px 14px;color:var(--mu);font:inherit;cursor:pointer;white-space:nowrap}
+nav button.on{color:var(--pr);border-color:var(--pr);font-weight:600}
+main{max-width:1200px;margin:auto;padding:16px 20px 40px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:16px;margin-bottom:16px}
+.card h2{font-size:16px;margin:0 0 10px}.card h3{font-size:13px;margin:16px 0 8px;color:var(--pr);text-transform:uppercase;letter-spacing:.04em}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+label{display:block;font-size:12px;color:var(--mu);margin-bottom:3px}
+input,select,textarea{width:100%;padding:8px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--tx);font:inherit}
+textarea{min-height:60px;resize:vertical}
+.btn{background:var(--pr);color:var(--pr-t);border:0;border-radius:6px;padding:8px 14px;font:inherit;cursor:pointer}.btn:disabled{opacity:.4}
+.btn.s{background:none;color:var(--pr);border:1px solid var(--pr)}.btn.d{background:none;color:#d33a3a;border:1px solid #d33a3a}
+.btn.sm{padding:4px 9px;font-size:13px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--bd);vertical-align:top}th{color:var(--mu);font-weight:600;white-space:nowrap}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;white-space:nowrap;color:#222}
+.L1{background:#00b050;color:#fff}.L2{background:#92d050}.L3{background:#ffff00}.L4{background:#ffc000}.L5{background:#ff0000;color:#fff}
+.st{font-size:12px;padding:2px 8px;border-radius:6px;border:1px solid var(--bd);color:var(--mu);white-space:nowrap}
+.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-bottom:16px}
+.kpi{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px}.kpi b{font-size:26px;display:block}.kpi span{font-size:12px;color:var(--mu)}
+.hm{display:grid;grid-template-columns:auto repeat(5,minmax(62px,1fr));gap:4px;max-width:680px}
+.hm .ax{display:flex;align-items:center;justify-content:center;color:var(--mu);font-size:11px;text-align:center}
+.hm .c{display:flex;flex-wrap:wrap;align-content:flex-start;position:relative;min-height:66px;padding:3px;border-radius:6px;color:#222;cursor:pointer}
+.hm .c.sel{outline:3px solid var(--tx)}.sc{position:absolute;right:5px;bottom:2px;font-size:12px;font-weight:700;opacity:.65}
+.ch{background:rgba(255,255,255,.88);color:#222;border:1px solid #555;border-radius:10px;padding:0 6px;font-size:10px;font-weight:600;margin:1px;height:17px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.mu{color:var(--mu);font-size:13px}
+.cols{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.empty{color:var(--mu);padding:12px 0}.bar{height:10px;border-radius:5px;display:inline-block;vertical-align:middle}
+.ck{display:inline-block;margin-right:12px;color:var(--tx);font-size:13px}.ck input{width:auto}
+</style>
+</head>
+<body>
+<header>
+<h1>Risk Register &amp; Usulan Profil Risiko</h1>
+<p id="sub"></p>
+<nav id="nav"></nav>
+</header>
+<main id="app"></main>
+<script>
+var KEY="rr_iso31000_v3";
+var M=[[1,3,5,9,20],[2,7,10,13,21],[4,8,14,17,22],[6,12,16,19,24],[11,15,18,23,25]];
+var LN=["","Sangat Rendah","Rendah","Sedang","Tinggi","Sangat Tinggi"];
+var KU=["Keuangan","Reputasi","Hukum","Kecelakaan Kerja","Layanan","Kinerja","SPBE","Kemitraan"];
+var KK=["Kerugian Keuangan Negara","Suap Menyuap","Penggelapan dalam Jabatan/Penyalahgunaan Wewenang","Pemerasan","Perbuatan Curang","Benturan Kepentingan dalam Pengadaan","Gratifikasi","Benturan Kepentingan","Merintangi Pemeriksaan","Pemberian Keterangan Palsu","Tindak Pidana Pencucian Uang"];
+var AD=["Keuangan Negara","Reputasi","Hukum","Kecelakaan dan Penyakit Akibat Kerja","Gangguan Layanan Organisasi","Penurunan Kinerja"];
+var SUM=["Sasaran organisasi UPR","Risiko UPR tingkat lebih tinggi (top-down)","Laporan pengawasan/pemeriksaan","BDKK","Pendapat ahli","Data pembanding (benchmark)","Usulan UPR di bawahnya (bottom-up)","Tinjauan risiko baru/belum teridentifikasi"];
+var BK=["Pendidikan","Pencegahan","Pengawasan dan penindakan"];
+var PC=["Halus (soft control)","Keras (hard control)"];
+var KEG=["Perencanaan dan Kerja Sama","Pengelolaan dan Pengadministrasian Pegawai, Organisasi dan Tatalaksana","Pengelolaan Keuangan dan BMN","Pembinaan Pengadaan Jasa Konstruksi","Dukungan Manajemen Sekretariat Jenderal","Pembentukan dan Evaluasi Peraturan Perundang-Undangan serta Advokasi Hukum","Penyelenggaraan dan Pembinaan Informasi Publik","Pengelolaan Data dan Teknologi Informasi","Penyelenggaraan Pengembangan Kompetensi","Penyelenggaraan Pengembangan Talenta"];
+var LK=["Hampir tidak terjadi","Jarang terjadi","Kadang terjadi","Sering terjadi","Hampir pasti terjadi"];
+var DP=["Tidak Signifikan","Minor","Moderat","Signifikan","Sangat Signifikan"];
+var RESP=["Mengurangi kemungkinan","Mengurangi dampak","Membagi risiko","Menghindari","Menerima"];
+var RJ=["Penguatan","Inovasi","Eskalasi"];
+var SD=["Man","Method","Money","Machine","Material"];
+var HN=["Memadai","Belum Memadai"];
+var ALAT=["Dokumen","Laporan","Keterangan saksi","Petunjuk","Keterangan ahli"];
+var JS=["Kesempatan","Tekanan","Rasionalisasi","Kapabilitas","Arogansi"];
+var STAT={baru:"Teridentifikasi",usul:"Diusulkan",pantau:"Dipantau di register",ajuan:"Menunggu verifikasi",profil:"Ditetapkan di profil"};
+var S={risks:[],bd:[],th:10,tab:"dash",edit:null,cell:null,c:{lvl:"UPR-T1",unit:"Sekretariat Jenderal",per:"2026",own:"Sekretaris Jenderal",mgr:"Kepala Biro Keuangan dan BMN",tuj:"Tercapainya Tingkat Kualitas Dukungan Manajemen Kementerian PKP sebesar 84%"}};
+function dflt(r){return Object.assign({keg:KEG[0],ev:"",cause:"",impact:"",kat:KU[0],ctrl:"",hn:HN[1],l:3,i:3,resp:RESP[0],rj:RJ[0],ru:"",rs:[],l2:2,i2:2,pj:"",wk:"",ik:"",sp:"",ph:"",ab:ALAT[0],js:JS[0],rf:"",ad:AD[5],ukl:"",ukd:"",sum:SUM[0],bk:BK[1],pc:PC[1],status:"baru"},r)}
+function load(){try{var d=JSON.parse(localStorage.getItem(KEY)||"null"),old=false;if(!d){d=JSON.parse(localStorage.getItem("rr_iso31000_v2")||"null");old=true}if(d&&d.risks){S.risks=d.risks.map(function(r){return dflt(r)});S.th=old?Math.max((d.th||11)-1,5):(d.th||10);S.bd=d.bd||[];S.c=Object.assign(S.c,d.c||{});return}}catch(e){}
+S.risks=[
+{id:"R1",keg:KEG[2],ev:"Keterlambatan penetapan status penggunaan (PSP) BMN",kat:"Kinerja",cause:"Masih terdapat ketidaksesuaian kelengkapan dokumen pada permohonan usulan",impact:"Target kinerja pada renstra Sekjen Kementerian PKP tidak tercapai",ctrl:"PMK No. 40 Tahun 2024; surat KPKNL; pendampingan dan bimtek aplikasi SIMAN",hn:HN[1],l:4,i:5,resp:"Mengurangi kemungkinan, Mengurangi dampak",rj:"Penguatan",ru:"1. Buku saku panduan pengusulan PSP 2. Klinik BMN (pendampingan PSP)",rs:["Method"],l2:2,i2:3,pj:"Biro Keuangan dan BMN",wk:"Semester II",ik:"Buku saku PSP; laporan Klinik BMN"},
+{id:"R2",keg:KEG[4],ev:"Terkendalanya proses mencari dokumen/berkas/arsip fisik maupun digital",kat:"Layanan",ad:AD[4],cause:"Belum ada acuan penulisan kode klasifikasi arsip dan SDM pengelola arsip belum dilatih",impact:"Proses mendapatkan informasi terhambat dan waktu pengambilan keputusan bertambah",ctrl:"Permen PUPR 16/PRT/M/2018 tentang Pola Klasifikasi Arsip",hn:HN[1],l:5,i:3,resp:RESP[0],rj:"Penguatan",ru:"1. Regulasi Klasifikasi Arsip dan JRA 2. Bimtek kearsipan",rs:["Man","Method"],l2:2,i2:3,pj:"Kepala Biro Umum",wk:"Jan–Des 2026",ik:"Regulasi KA dan JRA disahkan; laporan bimtek"},
+{id:"R3",keg:KEG[7],ev:"Manipulasi data presensi pegawai dalam sistem kehadiran MyPKP",kat:"Korupsi: Perbuatan Curang",cause:"Masih terdapat celah dalam proses verifikasi data presensi",impact:"Tunjangan kinerja dibayarkan tidak sesuai kehadiran",ctrl:"Presensi elektronik berbasis foto (belum ada pengenalan wajah)",hn:HN[1],l:4,i:3,resp:RESP[0],rj:"Penguatan",bk:BK[1],pc:PC[1],ad:AD[0],ru:"1. Fitur Face Recognition pada MyPKP 2. Fitur monitoring presensi pada akun administrator",rs:["Machine","Method"],l2:3,i2:2,pj:"Kepala Pusat Data dan Informasi",wk:"1 Apr–31 Des 2026",ik:"Fitur FR aktif; laporan monitoring",sp:"Pengelolaan presensi dan perhitungan tunjangan kinerja",ph:"Pegawai Kementerian PKP",ab:"Laporan",js:"Kapabilitas",rf:"Pola presensi identik atau anomali"}
+].map(dflt)}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({risks:S.risks,bd:S.bd,th:S.th,c:S.c}))}catch(e){}}
+function sv(l,i){return M[l-1][i-1]}function lv(s){return s>=20?5:s>=16?4:s>=11?3:s>=6?2:1}
+function s1(r){return sv(r.l,r.i)}function s2(r){return sv(r.l2,r.i2)}
+function isK(r){return r.kat.indexOf("Korupsi")==0}
+function pill(s){return '<span class="pill L'+lv(s)+'">'+s+' · '+LN[lv(s)]+'</span>'}
+function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function nid(){return "R"+(S.risks.reduce(function(m,r){return Math.max(m,parseInt(r.id.slice(1))||0)},0)+1)}
+function opts(a,v,off){return a.map(function(x,i){var val=off?i+1:x;return '<option value="'+esc(val)+'"'+(String(val)==String(v)?" selected":"")+'>'+(off?(i+1)+" – ":"")+esc(x)+'</option>'}).join("")}
+function katOpts(v){return '<optgroup label="Risiko Umum">'+opts(KU,v)+'</optgroup><optgroup label="Risiko Korupsi">'+opts(KK.map(function(x){return "Korupsi: "+x}),v)+'</optgroup>'}
+function setTab(t){S.tab=t;render()}
+function render(){
+var tabs=[["dash","Dasbor"],["reg","Register Risiko"],["sort","Penyortiran"],["prop","Usulan Profil Risiko"],["mon","Pemantauan Level"],["bd","BDKK"],["ctx","Konteks & Kriteria"]];
+document.getElementById("sub").textContent="Unit: "+S.c.unit+" · Periode "+S.c.per+" · Merujuk ISO 31000:2018 dan SE Dirjen TKPR No. 03/SE/Dt/2026";
+document.getElementById("nav").innerHTML=tabs.map(function(t){return '<button class="'+(S.tab==t[0]?"on":"")+'" onclick="setTab(\''+t[0]+'\')">'+t[1]+'</button>'}).join("");
+document.getElementById("app").innerHTML={dash:dash,reg:reg,sort:sort,prop:prop,mon:mon,bd:bd,ctx:ctx}[S.tab]()}
+function dash(){
+var R=S.risks,c1=[0,0,0,0,0,0],c2=[0,0,0,0,0,0];R.forEach(function(r){c1[lv(s1(r))]++;c2[lv(s2(r))]++});
+var n=function(s){return R.filter(function(r){return r.status==s}).length};
+var h='<div class="kpis"><div class="kpi"><b>'+R.length+'</b><span>Total risiko</span></div><div class="kpi"><b>'+R.filter(isK).length+'</b><span>Risiko korupsi</span></div><div class="kpi"><b>'+n("baru")+'</b><span>Menunggu penyortiran</span></div><div class="kpi"><b>'+n("usul")+'</b><span>Diusulkan</span></div><div class="kpi"><b>'+n("ajuan")+'</b><span>Menunggu verifikasi</span></div><div class="kpi"><b>'+n("profil")+'</b><span>Ditetapkan di profil</span></div></div>';
+h+='<div class="cols"><div class="card"><h2>Peta Risiko 5×5</h2><div class="hm"><div class="ax"></div><div class="ax" style="grid-column:2/7">DAMPAK</div>';
+for(var l=5;l>=1;l--){h+='<div class="ax">'+l+'<br>'+LK[l-1]+'</div>';for(var i=1;i<=5;i++){
+var ch=R.filter(function(r){return r.l==l&&r.i==i}).map(function(r){return '<span class="ch">'+r.id+'<sup>1</sup></span>'}).concat(R.filter(function(r){return r.l2==l&&r.i2==i}).map(function(r){return '<span class="ch">'+r.id+'<sup>2</sup></span>'})).join("");
+var sel=S.cell&&S.cell[0]==l&&S.cell[1]==i;h+='<div class="c L'+lv(sv(l,i))+(sel?" sel":"")+'"'+(sv(l,i)<=S.th?' style="box-shadow:inset 0 0 0 3px #7030a0"':'')+' onclick="pick('+l+','+i+')">'+ch+'<span class="sc">'+sv(l,i)+'</span></div>'}}
+h+='<div class="ax"></div>';for(var j=1;j<=5;j++)h+='<div class="ax">'+j+'<br>'+DP[j-1]+'</div>';
+h+='</div><p class="mu">Sumbu Y: kemungkinan (K). Sumbu X: dampak (D). Angka di sel = besaran risiko. <sup>1</sup> setelah pengendalian, <sup>2</sup> diharapkan setelah RTP. Klik sel untuk melihat daftar. Bingkai ungu = area dalam selera risiko (garis toleransi, nilai ≤ '+S.th+').</p></div>';
+h+='<div class="card"><h2>Tingkat Risiko (setelah pengendalian → diharapkan)</h2>';
+for(var k=5;k>=1;k--){var w=R.length?c1[k]/R.length*100:0;h+='<p><span class="pill L'+k+'" style="min-width:120px;text-align:center">'+LN[k]+'</span> <span class="bar L'+k+'" style="width:'+Math.max(w,1)*1.4+'px"></span> <b>'+c1[k]+'</b> → <b>'+c2[k]+'</b></p>'}
+h+='<h3>Per Kategori</h3>';var cat={};R.forEach(function(r){cat[r.kat]=(cat[r.kat]||0)+1});
+Object.keys(cat).forEach(function(k){h+='<p class="mu" style="margin:2px 0">'+esc(k)+': <b style="color:var(--tx)">'+cat[k]+'</b></p>'});
+h+='</div></div>';
+if(S.cell){var m=R.filter(function(r){return (r.l==S.cell[0]&&r.i==S.cell[1])||(r.l2==S.cell[0]&&r.i2==S.cell[1])});h+='<div class="card"><h2>Risiko pada sel K'+S.cell[0]+' × D'+S.cell[1]+' (nilai '+sv(S.cell[0],S.cell[1])+')</h2>'+(m.length?tbl(m,false):'<p class="empty">Tidak ada risiko.</p>')+'</div>'}
+return h+chk(R)}
+function pick(l,i){S.cell=(S.cell&&S.cell[0]==l&&S.cell[1]==i)?null:[l,i];render()}
+function tbl(L,act){
+return '<div class="tw"><table><tr><th>ID</th><th>Risiko</th><th>Kategori</th><th>Pengendalian</th><th>Setelah pengendalian</th><th>Diharapkan</th><th>PJ RTP</th><th>Status</th>'+(act?'<th></th>':'')+'</tr>'+L.map(function(r){return '<tr><td>'+r.id+'</td><td><b>'+esc(r.ev)+'</b><br><span class="mu">'+esc(r.keg)+'<br>Penyebab: '+esc(r.cause)+'<br>Dampak: '+esc(r.impact)+'</span></td><td>'+esc(r.kat)+'</td><td>'+esc(r.ctrl||"-")+'<br><span class="mu">'+esc(r.hn)+'</span></td><td>K'+r.l+'×D'+r.i+' '+pill(s1(r))+'</td><td>K'+r.l2+'×D'+r.i2+' '+pill(s2(r))+'</td><td>'+esc(r.pj)+'<br><span class="mu">'+esc(r.wk)+'</span></td><td><span class="st">'+STAT[r.status]+'</span></td>'+(act?'<td><div class="row"><button class="btn s sm" onclick="ed(\''+r.id+'\')">Ubah</button><button class="btn d sm" onclick="del(\''+r.id+'\')">Hapus</button></div></td>':'')+'</tr>'}).join("")+'</table></div>'}
+function I(id,lb,v){return '<div><label>'+lb+'</label><input id="f_'+id+'" value="'+esc(v)+'"></div>'}
+function T(id,lb,v){return '<div><label>'+lb+'</label><textarea id="f_'+id+'">'+esc(v)+'</textarea></div>'}
+function Sx(id,lb,o,ch){return '<div><label>'+lb+'</label><select id="f_'+id+'"'+(ch?' onchange="'+ch+'"':'')+'>'+o+'</select></div>'}
+function reg(){
+var e=dflt(S.edit?S.risks.filter(function(r){return r.id==S.edit})[0]:{});
+var h='<div class="card"><h2>'+(S.edit?"Ubah risiko "+S.edit:"Input Risiko Baru")+'</h2><p class="mu">Isian mengikuti kolom Profil Risiko. Nilai risiko mengikuti matriks 5×5 pada tab Konteks &amp; Kriteria.</p>';
+h+='<h3>A. Konteks &amp; identifikasi</h3><div class="grid">'+Sx("keg","Kegiatan utama",opts(KEG,e.keg))+Sx("kat","Kategori risiko",katOpts(e.kat),"tk()")+Sx("ad","Area dampak",opts(AD,e.ad))+Sx("sum","Sumber identifikasi",opts(SUM,e.sum))+'</div><div class="grid" style="margin-top:12px">'+T("ev","Pernyataan risiko",e.ev)+T("cause","Penyebab",e.cause)+T("impact","Dampak",e.impact)+'</div>';
+h+='<div id="kor" style="display:'+(isK(e)?"block":"none")+'"><h3>Khusus risiko korupsi</h3><div class="grid">'+I("sp","Sub proses bisnis",e.sp)+I("ph","Pihak terlibat (internal/eksternal)",e.ph)+Sx("ab","Alat bukti",opts(ALAT,e.ab))+Sx("js","Jenis penyebab korupsi (fraud pentagon)",opts(JS,e.js))+I("rf","Indikator kecurangan / red flag",e.rf)+Sx("bk","Bentuk RTP korupsi",opts(BK,e.bk))+Sx("pc","Pengendalian utama",opts(PC,e.pc))+'</div></div>';
+h+='<h3>B. Pengendalian &amp; analisis risiko (setelah pengendalian)</h3><div class="grid">'+T("ctrl","Pengendalian yang dilaksanakan",e.ctrl)+Sx("hn","Hasil penilaian pengendalian",opts(HN,e.hn))+Sx("l","Kemungkinan (K)",opts(LK,e.l,1),"prev()")+Sx("i","Dampak (D)",opts(DP,e.i,1),"prev()")+'<div><label>Nilai risiko</label><div id="pv1" style="padding-top:4px"></div></div></div><div class="grid" style="margin-top:12px">'+T("ukl","Uraian analisa kemungkinan",e.ukl)+T("ukd","Uraian analisa dampak",e.ukd)+'</div>';
+h+='<h3>C. Evaluasi, respon &amp; rencana tindak pengendalian (RTP)</h3><p class="mu">Jenis RTP: Penguatan bila pengendalian belum memadai; Inovasi bila sudah memadai tetapi nilai risiko masih di atas selera dan UPR dapat membuat kebijakan; Eskalasi bila kebijakan harus dibuat UPR lebih tinggi.</p><div class="grid">'+'<div><label>Respon risiko (boleh lebih dari satu)</label>'+RESP.map(function(x){return '<label class="ck"><input type="checkbox" id="rp_'+x.replace(/\W/g,"")+'"'+(e.resp.split(", ").indexOf(x)>=0?" checked":"")+'> '+x+'</label>'}).join("")+'</div>'+Sx("rj","Jenis RTP",opts(RJ,e.rj))+'</div><div class="grid" style="margin-top:12px">'+T("ru","Uraian RTP",e.ru)+T("ik","Indikator keluaran",e.ik)+'</div>';
+h+='<div style="margin-top:10px"><label>Alokasi sumber daya</label>'+SD.map(function(x){return '<label class="ck"><input type="checkbox" id="sd_'+x+'"'+(e.rs.indexOf(x)>=0?" checked":"")+'> '+x+'</label>'}).join("")+'</div>';
+h+='<div class="grid" style="margin-top:12px">'+Sx("l2","K diharapkan",opts(LK,e.l2,1),"prev()")+Sx("i2","D diharapkan",opts(DP,e.i2,1),"prev()")+'<div><label>Nilai risiko diharapkan</label><div id="pv2" style="padding-top:4px"></div></div>'+I("pj","Penanggung jawab RTP",e.pj)+I("wk","Target waktu",e.wk)+'</div>';
+h+='<div class="row" style="margin-top:14px"><button class="btn" onclick="saveR()">'+(S.edit?"Simpan perubahan":"Tambah ke register")+'</button>'+(S.edit?'<button class="btn s" onclick="S.edit=null;render()">Batal</button>':'')+'</div></div>';
+h+='<div class="card"><h2>Daftar Risiko ('+S.risks.length+')</h2>'+(S.risks.length?tbl(S.risks,true):'<p class="empty">Belum ada risiko.</p>')+'</div>';
+setTimeout(prev,0);return h}
+function g(id){return document.getElementById("f_"+id).value.trim()}
+function tk(){document.getElementById("kor").style.display=g("kat").indexOf("Korupsi")==0?"block":"none"}
+function prev(){var a=document.getElementById("pv1"),b=document.getElementById("pv2");if(a)a.innerHTML=pill(sv(+g("l"),+g("i")));if(b){var v=sv(+g("l2"),+g("i2"));b.innerHTML=pill(v)+(v>S.th?'<div class="mu">Di atas selera risiko: komunikasikan ke UPR lebih tinggi (eskalasi)</div>':'')}}
+function saveR(){
+if(!g("ev")){alert("Pernyataan risiko wajib diisi.");return}
+var o={};["keg","kat","ev","cause","impact","ctrl","hn","rj","ru","ik","pj","wk","sp","ph","ab","js","rf","ad","sum","ukl","ukd","bk","pc"].forEach(function(k){o[k]=g(k)});
+["l","i","l2","i2"].forEach(function(k){o[k]=+g(k)});
+o.rs=SD.filter(function(x){return document.getElementById("sd_"+x).checked});o.resp=RESP.filter(function(x){return document.getElementById("rp_"+x.replace(/\W/g,"")).checked}).join(", ");
+if(S.edit){S.risks.forEach(function(r){if(r.id==S.edit)Object.assign(r,o)});S.edit=null}else{o.id=nid();o.status="baru";S.risks.push(dflt(o))}
+save();render()}
+function ed(id){S.edit=id;render();window.scrollTo(0,0)}
+function del(id){if(confirm("Hapus "+id+"?")){S.risks=S.risks.filter(function(r){return r.id!=id});save();render()}}
+function dest(r){return isK(r)?"Profil Risiko Korupsi":"Profil Risiko"}
+function rec(r){return s1(r)>S.th?"usul":"pantau"}
+function mv(id,s){S.risks.forEach(function(r){if(r.id==id)r.status=s});save();render()}
+function auto(){S.risks.forEach(function(r){if(r.status=="baru")r.status=rec(r)});save();render()}
+function sort(){
+var B=S.risks.filter(function(r){return r.status=="baru"}).sort(pri);
+var h='<div class="card"><h2>Penyortiran Risiko</h2><p class="mu">Evaluasi risiko (ISO 31000 klausul 6.4.4): risiko dengan nilai setelah pengendalian di atas selera risiko (<b>'+S.th+'</b>, atur di tab Konteks &amp; Kriteria) diprioritaskan untuk respons dan diusulkan masuk profil. Urutan prioritas: nilai risiko, lalu area dampak. Risiko korupsi diarahkan ke Profil Risiko Korupsi, risiko lainnya ke Profil Risiko. Keputusan akhir tetap di tangan Anda.</p><button class="btn" onclick="auto()"'+(B.length?"":" disabled")+'>Sortir otomatis semua ('+B.length+')</button></div>';
+h+='<div class="card"><h2>Menunggu Keputusan</h2>';
+if(!B.length)h+='<p class="empty">Tidak ada risiko yang menunggu penyortiran.</p>';
+else h+='<div class="tw"><table><tr><th>ID</th><th>Risiko</th><th>Pengendalian</th><th>Nilai</th><th>Rekomendasi</th><th>Keputusan</th></tr>'+B.map(function(r){var u=rec(r)=="usul";return '<tr><td>'+r.id+'</td><td><b>'+esc(r.ev)+'</b><br><span class="mu">'+esc(r.kat)+' · '+esc(r.pj)+'</span></td><td>'+esc(r.hn)+'</td><td>'+pill(s1(r))+'</td><td>'+(u?"Usulkan ke "+dest(r):"Pantau di register")+'</td><td><div class="row"><button class="btn sm" onclick="mv(\''+r.id+'\',\'usul\')">Usulkan</button><button class="btn s sm" onclick="mv(\''+r.id+'\',\'pantau\')">Pantau</button></div></td></tr>'}).join("")+'</table></div>';
+h+='</div>';var P=S.risks.filter(function(r){return r.status=="pantau"});
+h+='<div class="card"><h2>Dipantau di Register ('+P.length+')</h2>'+(P.length?tbl(P,false)+'<div class="row" style="margin-top:8px">'+P.map(function(r){return '<button class="btn s sm" onclick="mv(\''+r.id+'\',\'usul\')">Usulkan '+r.id+'</button>'}).join("")+'</div>':'<p class="empty">Kosong.</p>')+'</div>';
+return h}
+function pt(L,k){
+if(!L.length)return '<p class="empty">Belum ada usulan.</p>';
+return '<div class="tw"><table><tr><th>Prior.</th><th>ID</th><th>Kegiatan utama</th><th>Pernyataan risiko</th><th>Kategori</th>'+(k?'<th>Sub proses / pihak</th>':'')+'<th>Penyebab</th><th>Dampak</th><th>Pengendalian &amp; penilaian</th><th>Setelah pengendalian</th><th>Respon</th><th>RTP</th><th>Sumber daya</th><th>Diharapkan</th><th>PJ / waktu</th><th>Indikator keluaran</th>'+(k?'<th>Penyebab korupsi / alat bukti / red flag</th>':'')+'<th></th></tr>'+L.map(function(r,n){
+return '<tr><td><b>'+(n+1)+'</b></td><td>'+r.id+'</td><td>'+esc(r.keg)+'</td><td><b>'+esc(r.ev)+'</b></td><td>'+esc(r.kat)+'<br><span class="mu">Area dampak: '+esc(r.ad)+'</span></td>'+(k?'<td>'+esc(r.sp)+'<br><span class="mu">'+esc(r.ph)+'</span></td>':'')+'<td>'+esc(r.cause)+'</td><td>'+esc(r.impact)+'</td><td>'+esc(r.ctrl||"-")+'<br><span class="mu">'+esc(r.hn)+'</span></td><td>K'+r.l+'×D'+r.i+'<br>'+pill(s1(r))+'</td><td>'+esc(r.resp)+'</td><td><b>'+esc(r.rj)+'</b><br>'+esc(r.ru)+'</td><td>'+esc(r.rs.join(", "))+'</td><td>K'+r.l2+'×D'+r.i2+'<br>'+pill(s2(r))+(s2(r)>S.th?'<br><span class="mu">Di atas selera: eskalasi ke UPR lebih tinggi</span>':'')+'</td><td>'+esc(r.pj)+'<br><span class="mu">'+esc(r.wk)+'</span></td><td>'+esc(r.ik)+'</td>'+(k?'<td>'+esc(r.js)+'<br>'+esc(r.ab)+'<br><span class="mu">'+esc(r.rf)+'</span></td>':'')+'<td><div class="row"><button class="btn sm" onclick="mv(\''+r.id+'\',\'ajuan\')">Ajukan verifikasi</button><button class="btn s sm" onclick="mv(\''+r.id+'\',\'baru\')">Kembalikan</button></div></td></tr>'}).join("")+'</table></div>'}
+function prop(){
+var U=S.risks.filter(function(r){return r.status=="usul"}).sort(pri);
+var A=S.risks.filter(function(r){return r.status=="ajuan"});var PF=S.risks.filter(function(r){return r.status=="profil"});
+return '<div class="card"><h2>Usulan Profil Risiko ('+U.filter(function(r){return !isK(r)}).length+')</h2><p class="mu">Prioritas diurutkan dari nilai risiko setelah pengendalian tertinggi.</p>'+pt(U.filter(function(r){return !isK(r)}),false)+'</div><div class="card"><h2>Usulan Profil Risiko Korupsi ('+U.filter(isK).length+')</h2>'+pt(U.filter(isK),true)+'</div><div class="card"><h2>Menunggu verifikasi Ditjen TKPR ('+A.length+')</h2><p class="mu">Setelah diverifikasi, Pemilik Risiko menetapkan risiko ke dalam profil.</p>'+(A.length?tbl(A,false)+'<div class="row" style="margin-top:8px">'+A.map(function(r){return '<button class="btn s sm" onclick="mv(\''+r.id+'\',\'profil\')">Tetapkan '+r.id+' di profil</button>'}).join("")+'</div>':'<p class="empty">Belum ada.</p>')+'</div><div class="card"><h2>Ditetapkan dalam Profil Risiko ('+PF.length+')</h2>'+(PF.length?tbl(PF,false):'<p class="empty">Belum ada.</p>')+'</div>'}
+function ctx(){
+var c=S.c,f=function(k,lb){return '<div><label>'+lb+'</label><input value="'+esc(c[k])+'" onchange="S.c.'+k+'=this.value;save();render()"></div>'};
+var h='<div class="card"><h2>Konteks Unit Pemilik Risiko</h2><div class="grid">'+f("unit","Unit organisasi")+f("per","Periode")+f("own","Jabatan pemilik risiko")+f("mgr","Jabatan pengelola risiko")+'<div><label>Tingkat UPR</label><select onchange="S.c.lvl=this.value;save();render()">'+Object.keys(MIN).map(function(k){return '<option'+(S.c.lvl==k?" selected":"")+'>'+k+'</option>'}).join("")+'</select></div>'+'</div><div style="margin-top:12px">'+f("tuj","Tujuan kegiatan utama / sasaran program")+'</div></div>';
+h+='<div class="card"><h2>Selera Risiko &amp; Garis Toleransi</h2><p class="mu">Selera risiko adalah nilai risiko tertinggi yang dapat diterima (ISO 31000 klausul 6.3.4; SE 03/2026). Risiko dengan nilai di atas selera diprioritaskan untuk respons dan diusulkan ke profil.</p><div style="max-width:380px"><select onchange="S.th=+this.value;save();render()">'+[[5,"5 – hanya Sangat Rendah yang diterima"],[10,"10 – Rendah ke bawah diterima"],[15,"15 – Sedang ke bawah diterima"],[19,"19 – hanya Sangat Tinggi di luar selera"]].map(function(o){return '<option value="'+o[0]+'"'+(S.th==o[0]?" selected":"")+'>'+o[1]+'</option>'}).join("")+'</select></div></div>';
+h+='<div class="card"><h2>Matriks Analisis Risiko 5×5</h2><div class="hm"><div class="ax"></div><div class="ax" style="grid-column:2/7">DAMPAK</div>';
+for(var l=5;l>=1;l--){h+='<div class="ax">'+l+'<br>'+LK[l-1]+'</div>';for(var i=1;i<=5;i++)h+='<div class="c L'+lv(sv(l,i))+'" style="min-height:44px;align-content:center;justify-content:center;font-weight:700;cursor:default">'+sv(l,i)+'</div>'}
+h+='<div class="ax"></div>';for(var j=1;j<=5;j++)h+='<div class="ax">'+j+'<br>'+DP[j-1]+'</div>';
+h+='</div><div class="tw" style="margin-top:12px"><table><tr><th>Nilai</th><th>Tingkat</th></tr><tr><td>1–5</td><td><span class="pill L1">Sangat Rendah</span></td></tr><tr><td>6–10</td><td><span class="pill L2">Rendah</span></td></tr><tr><td>11–15</td><td><span class="pill L3">Sedang</span></td></tr><tr><td>16–19</td><td><span class="pill L4">Tinggi</span></td></tr><tr><td>20–25</td><td><span class="pill L5">Sangat Tinggi</span></td></tr></table></div></div>';
+h+='<div class="card"><h2>Kriteria Kemungkinan &amp; Dampak (SE 03/2026)</h2><div class="tw"><table><tr><th>Level kemungkinan</th><th>Persentase</th><th>Frekuensi per tahun</th></tr>'+[["1 Hampir tidak terjadi","x ≤ 1%","x &lt; 2 kali"],["2 Jarang terjadi","1% &lt; x ≤ 10%","2 &lt; x ≤ 5 kali"],["3 Kadang terjadi","10% &lt; x ≤ 20%","6 &lt; x ≤ 9 kali"],["4 Sering terjadi","20% &lt; x ≤ 50%","10 &lt; x ≤ 12 kali"],["5 Hampir pasti terjadi","x &gt; 50%","x &gt; 12 kali"]].map(function(r){return '<tr><td>'+r.join("</td><td>")+'</td></tr>'}).join("")+'</table></div><p class="mu">Level dampak: '+DP.map(function(x,i){return (i+1)+" "+x}).join(", ")+'.<br>Area dampak (urut bobot tertinggi): '+AD.join(" › ")+'.<br>Ambang tiap area per tingkat UPR ada pada tabel kriteria dampak di SE. Contoh Penurunan Kinerja: &lt;5%, 5–10%, 10–20%, 20–25%, &gt;25% dari target kinerja. Kejadian berintensitas sangat rendah (bencana, kecelakaan fatal) memakai kolom toleransi rendah pada SE.</p></div>';
+h+='<div class="card"><h2>Pemetaan ISO 31000:2018 ↔ SE 03/2026 ↔ Aplikasi</h2><div class="tw"><table><tr><th>ISO 31000</th><th>Pedoman</th><th>Fitur aplikasi</th></tr>'+[["6.2 Komunikasi dan konsultasi","Komunikasi dan konsultasi; eskalasi ke UPR lebih tinggi","Usulan, eskalasi"],["6.3 Lingkup, konteks, kriteria","Perumusan lingkup, konteks, kriteria; kategori risiko","Konteks &amp; Kriteria"],["6.4.2 Identifikasi","Pernyataan risiko, penyebab, dampak; BDKK; top-down/bottom-up","Register, BDKK"],["6.4.3 Analisis","Kemungkinan × dampak, matriks 5×5, setelah pengendalian","Register"],["6.4.4 Evaluasi","Selera risiko, garis toleransi, prioritas risiko","Penyortiran"],["6.5 Perlakuan risiko","Respons risiko dan RTP, nilai risiko yang diharapkan","Register, Usulan"],["6.6 Pemantauan dan tinjauan","Pemantauan level risiko, tren, tinjauan risiko baru","Pemantauan Level, BDKK"],["6.7 Pencatatan dan pelaporan","Profil risiko dan penetapan oleh Pemilik Risiko","Usulan Profil Risiko"]].map(function(r){return '<tr><td>'+r.join("</td><td>")+'</td></tr>'}).join("")+'</table></div></div>';
+h+='<div class="card"><h2>Catatan Kategori &amp; Penyebab Korupsi</h2><p class="mu">Kategori umum: '+KU.join(", ")+'.<br>Sub kategori risiko korupsi: '+KK.join(", ")+'.<br>Penyebab korupsi (fraud pentagon): '+JS.join(", ")+'.</p><button class="btn d" onclick="if(confirm(\'Hapus semua data risiko?\')){S.risks=[];save();render()}">Kosongkan semua data</button></div>';
+return h}
+var MIN={"UPR-T1":[5,["Korupsi","SPBE"]],"UPR-T2":[4,["Korupsi"]],"Kementerian":[6,["Korupsi","Reputasi","Kemitraan"]]};
+function pri(a,b){return s1(b)-s1(a)||AD.indexOf(a.ad)-AD.indexOf(b.ad)}
+function no(v){return [1,2,3,4,5].map(function(x){return '<option'+(x==v?" selected":"")+'>'+x+'</option>'}).join("")}
+function chk(R){var m=MIN[S.c.lvl]||MIN["UPR-T1"],c={};R.filter(function(r){return r.status=="usul"||r.status=="ajuan"||r.status=="profil"}).forEach(function(r){c[isK(r)?"Korupsi":r.kat]=1});var n=Object.keys(c).length;
+return '<div class="card"><h2>Kelengkapan Profil ('+S.c.lvl+')</h2><p class="mu">Syarat minimal kategori dan kategori wajib menurut SE 03/2026 (Tabel 3), dihitung dari risiko berstatus diusulkan sampai ditetapkan.</p><p>Kategori terisi: <b>'+n+'</b> dari minimal <b>'+m[0]+'</b> '+(n>=m[0]?"✓":"✗")+'</p><p>Kategori wajib: '+m[1].map(function(k){return k+" "+(c[k]?"✓":"✗")}).join(" · ")+'</p></div>'}
+function ua(id,k,v){S.risks.forEach(function(r){if(r.id==id)r[k]=+v});save();render()}
+function mon(){var P=S.risks.filter(function(r){return r.status=="profil"});
+var h='<div class="card"><h2>Pemantauan Level Risiko</h2><p class="mu">Bandingkan nilai risiko aktual dengan nilai yang diharapkan setelah RTP (ISO 31000 klausul 6.6). Berlaku untuk risiko berstatus ditetapkan di profil.</p>';
+if(!P.length)return h+'<p class="empty">Belum ada risiko yang ditetapkan di profil.</p></div>';
+return h+'<div class="tw"><table><tr><th>ID</th><th>Risiko</th><th>Kejadian/tahun</th><th>Diharapkan</th><th>K aktual</th><th>D aktual</th><th>Aktual</th><th>Selisih</th><th>Tren</th><th>Rekomendasi</th></tr>'+P.map(function(r){var la=r.la||r.l,ia=r.ia||r.i,a=sv(la,ia),d=s2(r)-a,t=a>s1(r)?"Naik":a<s1(r)?"Turun":"Tetap";
+return '<tr><td>'+r.id+'</td><td>'+esc(r.ev)+'</td><td><input type="number" min="0" style="width:70px" value="'+(r.jk||0)+'" onchange="ua(\''+r.id+'\',\'jk\',this.value)"></td><td>'+pill(s2(r))+'</td><td><select onchange="ua(\''+r.id+'\',\'la\',this.value)">'+no(la)+'</select></td><td><select onchange="ua(\''+r.id+'\',\'ia\',this.value)">'+no(ia)+'</select></td><td>'+pill(a)+'</td><td>'+d+'</td><td>'+t+'</td><td>'+(a>s2(r)?"Respons belum efektif atau belum dilaksanakan: tambah/ganti pengendalian":"Respons efektif: jadikan pengendalian pada periode berikutnya")+'</td></tr>'}).join("")+'</table></div></div>'}
+function bd(){
+var h='<div class="card"><h2>Basis Data Kejadian Kerugian (BDKK)</h2><p class="mu">Catatan kejadian kerugian, pelanggaran, kegagalan, atau kesalahan sebagai sumber identifikasi risiko. Kejadian yang signifikan dapat dijadikan risiko di register.</p><div class="grid">'+I("bt","Tanggal pencatatan",new Date().toISOString().slice(0,10))+I("bw","Waktu terjadi","")+I("bl","Lokasi","")+'</div><div class="grid" style="margin-top:12px">'+T("bu","Uraian peristiwa","")+T("bs","Sebab","")+T("bi","Dampak","")+T("bh","Rincian penanganan","")+T("bz","Kondisi setelah penanganan","")+'</div><div style="margin-top:12px"><button class="btn" onclick="addBd()">Catat kejadian</button></div></div>';
+return h+'<div class="card"><h2>Daftar Kejadian ('+S.bd.length+')</h2>'+(S.bd.length?'<div class="tw"><table><tr><th>Tanggal</th><th>Peristiwa</th><th>Sebab / dampak</th><th>Penanganan</th><th></th></tr>'+S.bd.map(function(b,i){return '<tr><td>'+esc(b.t)+'<br><span class="mu">'+esc(b.w)+' · '+esc(b.l)+'</span></td><td>'+esc(b.u)+'</td><td>'+esc(b.s)+'<br><span class="mu">'+esc(b.i)+'</span></td><td>'+esc(b.h)+'<br><span class="mu">'+esc(b.z)+'</span></td><td><div class="row">'+(b.risk?'<span class="st">'+b.risk+'</span>':'<button class="btn s sm" onclick="toRisk('+i+')">Jadikan risiko</button>')+'<button class="btn d sm" onclick="delBd('+i+')">Hapus</button></div></td></tr>'}).join("")+'</table></div>':'<p class="empty">Belum ada kejadian.</p>')+'</div>'}
+function addBd(){if(!g("bu")){alert("Uraian peristiwa wajib diisi.");return}S.bd.push({t:g("bt"),w:g("bw"),l:g("bl"),u:g("bu"),s:g("bs"),i:g("bi"),h:g("bh"),z:g("bz")});save();render()}
+function delBd(i){if(confirm("Hapus kejadian ini?")){S.bd.splice(i,1);save();render()}}
+function toRisk(i){var b=S.bd[i],o=dflt({id:nid(),ev:b.u,cause:b.s,impact:b.i,ctrl:b.h,sum:SUM[3],status:"baru"});S.risks.push(o);b.risk=o.id;S.edit=o.id;S.tab="reg";save();render();window.scrollTo(0,0)}
+load();render();
+</script>
+</body>
+</html>
